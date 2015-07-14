@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: kaggle | Pegasus99]]></title>
-  <link href="http://pegasus99.github.io//blog/categories/kaggle/atom.xml" rel="self"/>
-  <link href="http://pegasus99.github.io//"/>
-  <updated>2015-07-14T03:02:52+02:00</updated>
-  <id>http://pegasus99.github.io//</id>
+  <link href="http://pegasus99.github.io/blog/categories/kaggle/atom.xml" rel="self"/>
+  <link href="http://pegasus99.github.io/"/>
+  <updated>2015-07-14T05:55:17+02:00</updated>
+  <id>http://pegasus99.github.io/</id>
   <author>
     <name><![CDATA[Mahmoud Mohsen]]></name>
     
@@ -14,11 +14,13 @@
 
   
   <entry>
-    <title type="html"><![CDATA[a machine learning app 60 minutes]]></title>
-    <link href="http://pegasus99.github.io//blog/2015/07/13/a-machine-learning-app-60-minutes/"/>
+    <title type="html"><![CDATA[A machine learning app in 60 minutes]]></title>
+    <link href="http://pegasus99.github.io/blog/2015/07/13/a-machine-learning-app-60-minutes/"/>
     <updated>2015-07-13T16:46:35+02:00</updated>
-    <id>http://pegasus99.github.io//blog/2015/07/13/a-machine-learning-app-60-minutes</id>
-    <content type="html"><![CDATA[<p>What are we going to make exactly ?</p>
+    <id>http://pegasus99.github.io/blog/2015/07/13/a-machine-learning-app-60-minutes</id>
+    <content type="html"><![CDATA[<p><br/></p>
+
+<p>What are we going to make exactly ?</p>
 
 <p>a simple web app that takes four words and finds out the odd word among the four.
 <a href="http://pegasus99.pythonanywhere.com/"> click here to see a life demo </a>.</p>
