@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: python | Pegasus99]]></title>
+  <link href="http://pegasus99.github.io//blog/categories/python/atom.xml" rel="self"/>
+  <link href="http://pegasus99.github.io//"/>
+  <updated>2015-07-14T03:02:52+02:00</updated>
+  <id>http://pegasus99.github.io//</id>
+  <author>
+    <name><![CDATA[Mahmoud Mohsen]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[a machine learning app 60 minutes]]></title>
+    <link href="http://pegasus99.github.io//blog/2015/07/13/a-machine-learning-app-60-minutes/"/>
+    <updated>2015-07-13T16:46:35+02:00</updated>
+    <id>http://pegasus99.github.io//blog/2015/07/13/a-machine-learning-app-60-minutes</id>
+    <content type="html"><![CDATA[<p>What are we going to make exactly ?</p>
+
+<p>a simple web app that takes four words and finds out the odd word among the four.
+<a href="http://pegasus99.pythonanywhere.com/"> click here to see a life demo </a>.</p>
+
+<p>prequests:</p>
+
+<p>-basic knowledge of python and machine learning. </br>
+-basic knowledge of server side and client side scripting and html.</br>
+-familiarity with flask will be useful but not required.</br></p>
+
+<p>description:</p>
+
+<p>Lately, I was looking for a minimal project on machine learning, after hours of searching</p>
+
+<p>I found the solution,<a href="https://www.kaggle.com/"> Kaggle </a>.</p>
+
+<p>Kaggle is a platform for data prediction competitions, it has a lot of great tutorials. the knowledge competitions is the best place for beginners.</p>
+
+<p>One of the competitions that I really liked is <a href="https://www.kaggle.com/c/word2vec-nlp-tutorial"> Bag of Words Meets Bags of Popcorn  </a>. This competition presented <a href="https://code.google.com/p/word2vec/"> google&rsquo;s word2vec </a>.</p>
+
+<p>To simplify the word2vec and what it does, Think of it as a black box that takes as an input pieces of text and
+it gives as an output vectors representation of this text, Which later can be used as features for machine learning algorithms (to do stuff like sentimental analysis and so on).</p>
+
+<p>What is cool about word2vec this vector representation maintain relation between words, so that we can say vector(&lsquo;Paris&rsquo;) - vector(&lsquo;France&rsquo;) + vector(&lsquo;Italy&rsquo;) results in a vector that is very close to vector(&lsquo;Rome&rsquo;).</p>
+
+<p>So far so good, now let&rsquo;s get it started !</p>
+
+<p><a href="https://www.kaggle.com/c/word2vec-nlp-tutorial/details/part-2-word-vectors"> first complete this tutorial to get the model.  </a></p>
+
+<p>I assume now you have a word2vec model, cool, let&rsquo;s go and do some nasty stuff with it.</p>
+
+<p>I choosed <a href="http://flask.pocoo.org/"> flask </a> &ldquo;a web development framework for python&rdquo; to implement our app.. but why ?</p>
+
+<p>I will let you look at the code to figure out yourself</p>
+
+<p><figure class='code'><figcaption><span>title:&ldquo;app.py&rdquo; </span></figcaption>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="kn">import</span> <span class="nn">os</span>
+</span><span class='line'><span class="kn">from</span> <span class="nn">gensim.models</span> <span class="kn">import</span> <span class="n">word2vec</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="kn">from</span> <span class="nn">flask</span> <span class="kn">import</span> <span class="n">Flask</span><span class="p">,</span><span class="n">render_template</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span><span class="n">json</span><span class="p">,</span><span class="n">jsonify</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">h1</span><span class="o">&gt;</span><span class="n">this</span> <span class="n">part</span> <span class="n">to</span> <span class="n">get</span> <span class="n">the</span> <span class="n">absolute</span> <span class="n">path</span> <span class="n">to</span> <span class="n">our</span> <span class="n">model</span> <span class="nb">file</span><span class="o">&lt;/</span><span class="n">h1</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="kn">import</span> <span class="nn">sys</span>
+</span><span class='line'><span class="kn">from</span> <span class="nn">imp</span> <span class="kn">import</span> <span class="nb">reload</span>
+</span><span class='line'><span class="nb">reload</span><span class="p">(</span><span class="n">sys</span><span class="p">)</span>
+</span><span class='line'><span class="n">sys</span><span class="o">.</span><span class="n">setdefaultencoding</span><span class="p">(</span><span class="o">&amp;</span><span class="n">lsquo</span><span class="p">;</span><span class="n">utf8</span><span class="o">&amp;</span><span class="n">rsquo</span><span class="p">;)</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">h1</span><span class="o">&gt;</span><span class="nb">type</span> <span class="n">here</span> <span class="n">the</span> <span class="n">model</span> <span class="n">name</span> <span class="n">you</span> <span class="n">have</span> <span class="n">during</span> <span class="n">kaggle</span><span class="o">&amp;</span><span class="n">rsquo</span><span class="p">;</span><span class="n">s</span> <span class="n">tutorial</span><span class="o">.&lt;/</span><span class="n">h1</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">model_name</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="mi">300</span><span class="n">features_40minwords_10context</span><span class="o">.</span><span class="n">gensim</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;</span>
+</span><span class='line'><span class="n">my_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="o">&lt;</span><span class="n">strong</span><span class="o">&gt;</span><span class="nb">file</span><span class="o">&lt;/</span><span class="n">strong</span><span class="o">&gt;</span><span class="p">)</span>
+</span><span class='line'><span class="n">model_file_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">my_dir</span><span class="p">,</span> <span class="n">model_name</span><span class="p">)</span>
+</span><span class='line'><span class="n">model</span> <span class="o">=</span> <span class="n">word2vec</span><span class="o">.</span><span class="n">Word2Vec</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">model_file_path</span><span class="p">)</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">app</span> <span class="o">=</span> <span class="n">Flask</span><span class="p">(</span><span class="o">&lt;</span><span class="n">strong</span><span class="o">&gt;</span><span class="n">name</span><span class="o">&lt;/</span><span class="n">strong</span><span class="o">&gt;</span><span class="p">)</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">h1</span><span class="o">&gt;</span><span class="n">this</span> <span class="n">one</span> <span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="n">index</span><span class="o">.</span><span class="n">html</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;</span> <span class="ow">is</span> <span class="n">the</span> <span class="n">default</span> <span class="n">page</span> <span class="p">,</span> <span class="n">containing</span> <span class="n">an</span> <span class="n">html</span> <span class="n">form</span><span class="o">.&lt;/</span><span class="n">h1</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="nd">@app.route</span><span class="p">(</span><span class="o">&amp;</span><span class="n">lsquo</span><span class="p">;</span><span class="o">/&amp;</span><span class="n">rsquo</span><span class="p">;)</span>
+</span><span class='line'><span class="k">def</span> <span class="nf">hello</span><span class="p">():</span>
+</span><span class='line'>    <span class="k">return</span> <span class="n">render_template</span><span class="p">(</span><span class="o">&amp;</span><span class="n">lsquo</span><span class="p">;</span><span class="n">index</span><span class="o">.</span><span class="n">html</span><span class="o">&amp;</span><span class="n">rsquo</span><span class="p">;)</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">h1</span><span class="o">&gt;</span><span class="n">this</span> <span class="n">one</span> <span class="n">handles</span> <span class="n">the</span> <span class="n">request</span> <span class="n">made</span> <span class="n">by</span> <span class="n">an</span> <span class="n">Ajax</span> <span class="n">post</span><span class="p">,</span> <span class="n">caused</span> <span class="n">by</span> <span class="n">the</span> <span class="n">form</span><span class="o">&amp;</span><span class="n">rsquo</span><span class="p">;</span><span class="n">s</span> <span class="n">button</span><span class="o">&lt;/</span><span class="n">h1</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="nd">@app.route</span><span class="p">(</span><span class="o">&amp;</span><span class="n">lsquo</span><span class="p">;</span><span class="o">/</span><span class="n">ajaxhandler</span><span class="o">&amp;</span><span class="n">rsquo</span><span class="p">;,</span> <span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="o">&amp;</span><span class="n">lsquo</span><span class="p">;</span><span class="n">POST</span><span class="o">&amp;</span><span class="n">rsquo</span><span class="p">;])</span>
+</span><span class='line'><span class="k">def</span> <span class="nf">ajax_handler</span><span class="p">():</span>
+</span><span class='line'>    <span class="n">first</span> <span class="o">=</span>  <span class="n">request</span><span class="o">.</span><span class="n">form</span><span class="p">[</span><span class="o">&amp;</span><span class="n">lsquo</span><span class="p">;</span><span class="n">first</span><span class="o">&amp;</span><span class="n">rsquo</span><span class="p">;]</span>
+</span><span class='line'>    <span class="n">second</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">form</span><span class="p">[</span><span class="o">&amp;</span><span class="n">lsquo</span><span class="p">;</span><span class="n">second</span><span class="o">&amp;</span><span class="n">rsquo</span><span class="p">;]</span>
+</span><span class='line'>    <span class="n">third</span><span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">form</span><span class="p">[</span><span class="o">&amp;</span><span class="n">lsquo</span><span class="p">;</span><span class="n">third</span><span class="o">&amp;</span><span class="n">rsquo</span><span class="p">;]</span>
+</span><span class='line'>    <span class="n">fourth</span> <span class="o">=</span><span class="n">request</span><span class="o">.</span><span class="n">form</span><span class="p">[</span><span class="o">&amp;</span><span class="n">lsquo</span><span class="p">;</span><span class="n">fourth</span><span class="o">&amp;</span><span class="n">rsquo</span><span class="p">;]</span>
+</span><span class='line'>    <span class="n">result</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">doesnt_match</span> <span class="p">((</span><span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="o">%</span><span class="n">s</span> <span class="o">%</span><span class="n">s</span> <span class="o">%</span><span class="n">s</span> <span class="o">%</span><span class="n">s</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;</span><span class="o">%</span><span class="p">(</span><span class="n">first</span><span class="p">,</span><span class="n">second</span><span class="p">,</span><span class="n">third</span><span class="p">,</span><span class="n">fourth</span><span class="p">))</span><span class="o">.</span><span class="n">split</span><span class="p">())</span>
+</span><span class='line'>    <span class="k">return</span> <span class="n">jsonify</span><span class="p">({</span><span class="o">&amp;</span><span class="n">lsquo</span><span class="p">;</span><span class="n">result</span><span class="o">&amp;</span><span class="n">rsquo</span><span class="p">;:</span><span class="n">result</span>  <span class="p">})</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="k">if</span> <span class="o">&lt;</span><span class="n">strong</span><span class="o">&gt;</span><span class="n">name</span><span class="o">&lt;/</span><span class="n">strong</span><span class="o">&gt;==&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="o">&lt;</span><span class="n">strong</span><span class="o">&gt;</span><span class="n">main</span><span class="o">&lt;/</span><span class="n">strong</span><span class="o">&gt;&amp;</span><span class="n">rdquo</span><span class="p">;:</span>
+</span><span class='line'>    <span class="n">app</span><span class="o">.</span><span class="n">run</span><span class="p">()</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span>
+</span></code></pre></td></tr></table></div></figure></p>
+
+<p>So this is it? really ? it&rsquo;s python baby&hellip; one file of code and our server side scripting is done.</p>
+
+<p><a href="https://github.com/Pegasus99/word_2_vec/">  Here is the complete source code for the project </a></p>
+
+<p>Now let&rsquo;s test it locally. type :<br/>
+<figure class='code'><figcaption><span>title:&ldquo;shell&rdquo; </span></figcaption>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>python <span class="p">&amp;</span>ldquo<span class="p">;</span>absolute path to app.py file<span class="p">&amp;</span>rdquo<span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure></p>
+
+<p>for example on my linux machine the command will be like:</p>
+
+<p><figure class='code'><figcaption><span>title:&ldquo;shell&rdquo; </span></figcaption>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>python  /home/pegasus/word_2_vec
+</span></code></pre></td></tr></table></div></figure></p>
+
+<p>after you type this command you should see something like this</p>
+
+<p><figure class='code'><figcaption><span>title:&ldquo;shell&rdquo; </span></figcaption>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'> * Running on &lt;a <span class="nv">href</span><span class="o">=</span><span class="s2">&quot;http://127.0.0.1:5000/&quot;</span>&gt;http://127.0.0.1:5000/&lt;/a&gt; <span class="o">(</span>Press CTRL+C to quit<span class="o">)</span>
+</span></code></pre></td></tr></table></div></figure></p>
+
+<p>so far so good .. let&rsquo;s put it online but where ?</p>
+
+<p>Among many choices for hosting . I powerfully recommend <a href="https://www.pythonanywhere.com/">pythonanywhere </a>&hellip; it&rsquo;s dedicated for python, so you won&rsquo;t need to configure any thing.
+They have also a great tutorial about how to use it. the free account is enough for our app.</p>
+
+<p>I know this is not a complete tutorial, but I&rsquo;m a big fan of the DRY concept (don&rsquo;t repeat your self).</p>
+
+<p>That was quick and simple, But simplicity is a virtue (Edsger Dijkstra) &hellip;now you have made a cool app in no time . I hope you guys enjoyed such as I did on writing this tutorial. see you soon.</p>
+]]></content>
+  </entry>
+  
+</feed>
